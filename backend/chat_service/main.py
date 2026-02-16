@@ -2,6 +2,7 @@ import json
 import redis
 import socketio
 from fastapi import FastAPI
+import uvicorn
 
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 
@@ -60,3 +61,6 @@ async def disconnect(sid):
     r.srem("online_users", sid)
     userNicknames.pop(sid, None)
     await sio.emit("online_users", get_online_users())
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8002)

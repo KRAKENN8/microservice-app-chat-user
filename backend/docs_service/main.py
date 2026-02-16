@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from typing import Optional
 from pymongo import MongoClient
 from datetime import datetime
-from bson import ObjectId
+import uvicorn
 
 client = MongoClient("mongodb://localhost:27017/")
 db = client["test"]
@@ -60,3 +60,6 @@ def update_document(doc_id: str, update: UpdateDocument):
     update_dict = update.dict(exclude_unset=True)
     collection.update_one({"_id": ObjectId(doc_id)}, {"$set": update_dict})
     return {"status": "updated"}
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8003)

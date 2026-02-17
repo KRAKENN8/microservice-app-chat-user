@@ -85,10 +85,10 @@ export default function Docs() {
 
         <textarea value={content} onChange={(e) => setContent(e.target.value)} className="border p-2 w-full mb-2"/>
 
-        <button onClick={createDoc} className="border p-2 mb-4">Create</button>
+        <button onClick={createDoc} className="border p-2">Create</button>
 
         {documents.map((document) => (
-          <div key={document._id} className="border p-3 mb-3">
+          <div key={document._id} className="border p-2">
 
             <h1>{document.title}</h1>
             <p>{document.content}</p>
@@ -110,8 +110,8 @@ export default function Docs() {
             </div>
 
             {document.comments &&
-              document.comments.map((com, i) => (
-                <div key={i} className="p-2">
+              document.comments.map((com, id) => (
+                <div key={id} className="p-2">
                   <b>{com.user}:</b> {com.text}
                 </div>
               ))}

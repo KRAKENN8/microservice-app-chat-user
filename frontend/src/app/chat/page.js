@@ -68,7 +68,7 @@ export default function Chat() {
           ))}
 
         <div className="flex border gap-2">
-          <input className="flex-9 p-2" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Message..."/>
+          <input className="flex-9 p-2" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Message"/>
           <button className="flex-1 border-l p-2" onClick={sendMessage}>Send</button>
         </div>
       </div>

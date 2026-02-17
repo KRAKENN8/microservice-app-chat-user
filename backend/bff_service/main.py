@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from db import Database
-import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException, status
 
@@ -61,6 +60,3 @@ def login(payload: UserLogin):
             user_out[key] = value
 
     return user_out
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8001)

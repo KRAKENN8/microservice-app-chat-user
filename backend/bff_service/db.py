@@ -7,7 +7,7 @@ class Database:
         'host': 'localhost',
         'user': 'root',
         'password': '',
-        'database': 'app'
+        'database': 'chat'
     }
     
     @staticmethod

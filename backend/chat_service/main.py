@@ -2,6 +2,10 @@ import json
 import redis
 import socketio
 from fastapi import FastAPI
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 
@@ -9,9 +13,9 @@ app = FastAPI()
 socket_app = socketio.ASGIApp(sio, app)
 
 r = redis.Redis(
-    host="localhost",
-    port=6379,
-    decode_responses=True
+    host=os.getenv("host"),
+    port=os.getenv("port"),
+    decode_responses=os.getenv("decode")
 )
 
 userNicknames = {}
@@ -36,7 +40,7 @@ async def set_username(sid, username):
     userNicknames[sid] = username
     r.sadd("online_users", sid)
 
-    history = r.lrange("chat_history", 0, 15)
+    history = r.lrange("chat_history", 0, 10)
     parsed = [json.loads(x) for x in history]
 
     await sio.emit("history", parsed, to=sid)
@@ -50,7 +54,7 @@ async def chat_message(sid, msg):
     message_json = json.dumps(message)
 
     r.lpush("chat_history", message_json)
-    r.ltrim("chat_history", 0, 15)
+    r.ltrim("chat_history", 0, 10)
 
     await sio.emit("chat_message", message)
 

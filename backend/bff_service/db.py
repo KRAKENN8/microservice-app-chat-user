@@ -1,13 +1,16 @@
 import mysql.connector
 import hashlib
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Database:
     CONNECTION_CONFIG = {
-        'host': 'localhost',
-        'user': 'root',
-        'password': '',
-        'database': 'chat'
+        'host': os.getenv("host"),
+        'user': os.getenv("user"),
+        'password': os.getenv("password"),
+        'database': os.getenv("database"),
     }
     
     @staticmethod

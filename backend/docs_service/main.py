@@ -5,10 +5,14 @@ from typing import Optional
 from pymongo import MongoClient
 from datetime import datetime
 from bson import ObjectId
+from dotenv import load_dotenv
+import os
 
-client = MongoClient("mongodb://localhost:27017/")
-db = client["test"]
-collection = db["docs"]
+load_dotenv()
+
+client = MongoClient(os.getenv("MONGO_URI"))
+db = client[os.getenv("MONGO_DB")]
+collection = db[os.getenv("MONGO_COLLECTION")]
 
 app = FastAPI()
 app.add_middleware(

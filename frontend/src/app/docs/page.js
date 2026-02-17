@@ -110,8 +110,8 @@ export default function Docs() {
             </div>
 
             {document.comments &&
-              document.comments.map((com, id) => (
-                <div key={id} className="p-2">
+              document.comments.map((com, i) => (
+                <div key={i} className="p-2">
                   <b>{com.user}:</b> {com.text}
                 </div>
               ))}

@@ -64,10 +64,10 @@ export default function Chat() {
   return (
     <div className="h-screen flex">
       <div className="flex flex-col flex-1">
-          {messages.map((m, i) => (
+          {messages.map((message, i) => (
             <div key={i} className="border p-2">
-              <div className="">{m.user}</div>
-              <div>{m.text}</div>
+              <div className="">{message.user}</div>
+              <div>{message.text}</div>
             </div>
           ))}
 
@@ -80,8 +80,8 @@ export default function Chat() {
       <div className="w-60 p-2">
         <div>Online ({online.length})</div>
         <ul className="p-2">
-          {online.map((u, i) => (
-            <h1 key={i}>{u}</h1>
+          {online.map((user, i) => (
+            <h1 key={i}>{user}</h1>
           ))}
         </ul>
       </div>

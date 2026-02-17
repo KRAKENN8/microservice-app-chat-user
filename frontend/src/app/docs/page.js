@@ -19,6 +19,10 @@ export default function Docs() {
     router.push("/chat");
   };
 
+  const handleHome = () => {
+    router.push('/');
+  };
+
   const fetchDocs = async () => {
     const res = await fetch("http://localhost:8002/documents");
     const data = await res.json();
@@ -38,8 +42,8 @@ export default function Docs() {
   const createDoc = async () => {
     await fetch("http://localhost:8002/documents", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content }),
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({title, content}),
     });
 
     setTitle("");
@@ -47,38 +51,29 @@ export default function Docs() {
     fetchDocs();
   };
 
-  const startEdit = (doc) => {
-    setEditId(doc._id);
-    setEditTitle(doc.title);
-    setEditContent(doc.content);
-  };
-
-  const handleUpdate = async () => {
-    if (!editId) return;
-
-    await fetch(`http://localhost:8002/documents/${editId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: editTitle,
-        content: editContent,
-      }),
-    });
-
-    setEditId(null);
-    setEditTitle("");
-    setEditContent("");
-    fetchDocs();
+  const startEdit = async (doc) => {
+    if (editId === doc._id) {
+      await fetch(`http://localhost:8002/documents/${editId}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({title: editTitle, content: editContent}),
+      });
+      setEditId(null);
+      fetchDocs();
+    } else {
+      setEditId(doc._id);
+      setEditTitle(doc.title);
+      setEditContent(doc.content);
+      fetchDocs()
+    }
   };
 
   const addComment = async (id) => {
     await fetch(`http://localhost:8002/documents/${id}/comments`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user: user.name, text: comment }),
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({user: user.name, text: comment}),
     });
-
-    setComment("");
     fetchDocs();
   };
 
@@ -102,7 +97,6 @@ export default function Docs() {
               <div className="border p-2">
                 <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} className="border p-2 w-full"/>
                 <textarea value={editContent} onChange={(e) => setEditContent(e.target.value)} className="border p-2 w-full mb-2"/>
-                <button className="border p-2" onClick={handleUpdate}>Save</button>
               </div>
             )}
 
@@ -127,6 +121,7 @@ export default function Docs() {
 
       <div className="p-4">
         <button className="border p-2" onClick={handleNavigation}>Chat</button>
+        <button className="flex-1 border p-2" onClick={handleHome}>Home</button>
       </div>
     </div>
   );

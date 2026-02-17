@@ -78,7 +78,7 @@ export default function Chat() {
       </div>
 
       <div className="w-60 p-2">
-        <div> Online ({online.length})</div>
+        <div>Online ({online.length})</div>
         <ul className="p-2">
           {online.map((u, i) => (
             <h1 key={i}>{u}</h1>
@@ -86,10 +86,8 @@ export default function Chat() {
         </ul>
       </div>
 
-      <div>
+      <div className="p-4">
         <button className="flex-1 border p-2" onClick={handleNavigation}>Docs</button>
-      </div>
-      <div>
         <button className="flex-1 border p-2" onClick={handleHome}>Home</button>
       </div>
     </div>

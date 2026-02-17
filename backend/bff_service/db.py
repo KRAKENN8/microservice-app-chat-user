@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Database:
-    CONNECTION_CONFIG = {
+    config = {
         'host': os.getenv("host"),
         'user': os.getenv("user"),
         'password': os.getenv("password"),
@@ -16,7 +16,7 @@ class Database:
     @staticmethod
     def connect_to_database():
         try:
-            conn = mysql.connector.connect(**Database.CONNECTION_CONFIG)
+            conn = mysql.connector.connect(**Database.config)
             return conn
         except Exception as e:
             print(e)

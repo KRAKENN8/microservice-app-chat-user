@@ -44,13 +44,6 @@ class Database:
 
             cursor.execute(query, (name, email, password_hash))
             conn.commit()
-
-            return {
-                "id": cursor.lastrowid,
-                "name": name,
-                "email": email,
-                "role": 1
-            }
         except Exception as e:
             print(e)
             return None

@@ -18,6 +18,10 @@ export default function Chat() {
     router.push('/docs');
   };
 
+  const handleHome = () => {
+    router.push('/');
+  };
+
   useEffect(() => {
     const stored = localStorage.getItem("user");
     if (!stored) {
@@ -67,7 +71,7 @@ export default function Chat() {
             </div>
           ))}
 
-        <div className="flex border gap-2">
+        <div className="flex border p-2">
           <input className="flex-9 p-2" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Message"/>
           <button className="flex-1 border-l p-2" onClick={sendMessage}>Send</button>
         </div>
@@ -77,13 +81,16 @@ export default function Chat() {
         <div> Online ({online.length})</div>
         <ul className="p-2">
           {online.map((u, i) => (
-            <li key={i}>{u}</li>
+            <h1 key={i}>{u}</h1>
           ))}
         </ul>
       </div>
 
       <div>
-        <button className="flex-1 border p-2" onClick={handleNavigation}>Go to Docs</button>
+        <button className="flex-1 border p-2" onClick={handleNavigation}>Docs</button>
+      </div>
+      <div>
+        <button className="flex-1 border p-2" onClick={handleHome}>Home</button>
       </div>
     </div>
   );

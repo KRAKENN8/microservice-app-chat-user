@@ -10,9 +10,9 @@ import os
 
 load_dotenv()
 
-client = MongoClient(os.getenv("MONGO_URI"))
-db = client[os.getenv("MONGO_DB")]
-collection = db[os.getenv("MONGO_COLLECTION")]
+client = MongoClient(os.getenv("url"))
+db = client[os.getenv("db")]
+collection = db[os.getenv("collection")]
 
 app = FastAPI()
 app.add_middleware(

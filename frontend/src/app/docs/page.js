@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Docs() {
   const router = useRouter();
 
-  const [docs, setDocs] = useState([]);
+  const [documents, setDocuments] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("{}");
   const [comment, setComment] = useState("");
@@ -22,7 +22,7 @@ export default function Docs() {
   const fetchDocs = async () => {
     const res = await fetch("http://localhost:8002/documents");
     const data = await res.json();
-    setDocs(data);
+    setDocuments(data);
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Docs() {
     });
 
     setTitle("");
-    setContent("{}");
+    setContent("");
     fetchDocs();
   };
 
@@ -92,13 +92,13 @@ export default function Docs() {
 
         <button onClick={createDoc} className="border p-2 mb-4">Create</button>
 
-        {docs.map((d) => (
-          <div key={d._id} className="border p-3 mb-3">
+        {documents.map((document) => (
+          <div key={document._id} className="border p-3 mb-3">
 
-            <strong>{d.title}</strong>
-            <pre>{d.content}</pre>
+            <h1>{document.title}</h1>
+            <p>{document.content}</p>
 
-            {editId === d._id && (
+            {editId === document._id && (
               <div className="border p-2">
                 <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} className="border p-2 w-full"/>
                 <textarea value={editContent} onChange={(e) => setEditContent(e.target.value)} className="border p-2 w-full mb-2"/>
@@ -108,17 +108,17 @@ export default function Docs() {
 
             <div className="p-2">
               <input value={comment} onChange={(e) => setComment(e.target.value)} className="border p-2 mr-1"/>
-              <button onClick={() => addComment(d._id)} className="border p-2">Add Comment</button>
+              <button onClick={() => addComment(document._id)} className="border p-2">Add Comment</button>
 
-              {user?.role === 2 && (
-              <button className="border p-2" onClick={() => startEdit(d)}>Edit</button>
+              {user.role === 2 && (
+              <button className="border p-2" onClick={() => startEdit(document)}>Edit</button>
             )}
             </div>
 
-            {d.comments &&
-              d.comments.map((c, i) => (
-                <div key={i} className="mt-1">
-                  <b>{c.user}:</b> {c.text}
+            {document.comments &&
+              document.comments.map((com, i) => (
+                <div key={i} className="p-2">
+                  <b>{com.user}:</b> {com.text}
                 </div>
               ))}
           </div>
@@ -126,7 +126,7 @@ export default function Docs() {
       </div>
 
       <div className="p-4">
-        <button className="border p-2" onClick={handleNavigation}>Go to Chat</button>
+        <button className="border p-2" onClick={handleNavigation}>Chat</button>
       </div>
     </div>
   );
